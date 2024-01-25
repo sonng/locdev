@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  local-dev:
+    tty: true
+    build:
+      context: .
+      args:
+        - USER=${USER}
+        - USER_PASSWORD=${USER_PASSWORD}
+    image: local-dev
+    platform: linux/amd64
+    env_file:
+      - .envrc
+    volumes:
+      - type: bind
+        source: ${WORKSPACE}
+        target: /home/son/workspace
