@@ -8,8 +8,13 @@ services:
       args:
         - USER=${USER}
         - USER_PASSWORD=${USER_PASSWORD}
+        - LOCAL_DEV_SSH_PUB=${LOCAL_DEV_SSH_PUB}
     image: local-dev
     platform: linux/amd64
+    privileged: true
+    cgroup: host
+    ports:
+      - "2222:22"
     env_file:
       - .envrc
     volumes:
