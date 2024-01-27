@@ -1,1 +1,3 @@
 .envrc
+cloud-init/meta-data
+cloud-init.iso

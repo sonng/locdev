@@ -1,0 +1,15 @@
+#cloud-config
+users:
+  - name: $USER
+    plain_text_passwd: $PASSWORD
+    ssh-authorized-keys:
+        - $SSH_KEY
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    lock_passwd: False
+    shell: /bin/bash
+runcmd:
+  - sed -i -e '/^Port/s/^.*$/Port 22/' /etc/ssh/sshd_config
+  - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin no/' /etc/ssh/sshd_config
+  - sed -i -e '$aAllowUsers $USER' /etc/ssh/sshd_config
+  - sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication yes/' /etc/ssh/sshd_config
+  - restart ssh
