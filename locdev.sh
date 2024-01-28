@@ -2,6 +2,9 @@
 set -x
 
 function install_dependencies() {
+    # Install Tart
+    brew install cirruslabs/cli/tart
+
     # Install build dependencies
     brew install qemu cdrtools packer
 }
@@ -38,6 +41,17 @@ function pack_image() {
     packer build images/
 }
 
+function release() {
+    # Clean and build
+    clean
+    build
+
+    # Push
+    tart push "$LOCDEV_VM_NAME" ghcr.io/"$GITHUB_ORG"/"$LOCDEV_VM_NAME":latest ghcr.io/"$GITHUB_ORG"/"$LOCDEV_VM_NAME":"$(date +%s)"
+
+    # Clean up everything
+    clean
+}
 function build() {
     install_dependencies
     prepare_disk
@@ -58,7 +72,7 @@ function clean() {
 
 function print_usage() {
     echo "Usage: locdev-cli <command>"
-    echo "Available commands: build, clean"
+    echo "Available commands: build, clean, docker_login"
     exit 1
 }
 
@@ -76,6 +90,12 @@ case "$1" in
     cleanbuild)
         clean
         build
+        ;;
+    docker_login)
+        docker_login
+        ;;
+    release)
+        release
         ;;
     *)
         print_usage

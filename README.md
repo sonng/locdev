@@ -7,8 +7,9 @@ The idea is that I have a dev environment that is;
 - consistent across multiple machines
 
 
-VM image is built using [Packer](https://www.packer.io/)
 To run these images on the Mac use [Tart](https://tart.run/).
+VM image is built using [Packer](https://www.packer.io/) + Tart
+VM is configured with [Ansible](https://www.ansible.com/) via Packer Plugin.
 
 # To Build
 
@@ -23,11 +24,14 @@ Make sure to have the following environment variables
 
 | Envionment Variable | Description |
 | -- | -- |
-| FEDORA_IMAGE_LOCATION | The absolute path to the image (qcow2) |
+| VM_IMAGE_LOCATION | The absolute path to the image (qcow2) |
 | LOCDEV_VM_NAME | Name of VM |
 | LOCDEV_USERNAME | User for the VM |
 | LOCDEV_PASSWORD | Password for the user |
 | LOCDEV_HOSTNAME | Hostname for the VM |
+| LOCDEV_SSH_KEY | Authorized SSH Key for user |
+| DISK_SIZE | Size of the disk for the VM (i.e 100G) |
+
 
 ```bash
 > ./build.sh

@@ -1,8 +1,12 @@
 packer {
   required_plugins {
     tart = {
-      version = ">= 0.5.3"
+      version = ">= 1.6.1"
       source  = "github.com/cirruslabs/tart"
+    }
+    ansible = {
+      source = "github.com/hashicorp/ansible"
+      version = ">= 1.1.1"
     }
   }
 }
@@ -40,6 +44,10 @@ source "tart-cli" "tart" {
 
 build {
     sources = ["source.tart-cli.tart"]
+
+    provisioner "ansible" {
+        playbook_file = "./playbook.yml"
+    }
 
     provisioner "shell" {
         inline = [

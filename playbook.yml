@@ -1,0 +1,10 @@
+---
+- name: 'Setup Environment'
+  hosts: default
+  become: true
+
+  tasks:
+    - name: Install Text Editors
+      package:
+        name:
+          - neovim
